@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import Amplify, { API, graphqlOperation } from 'aws-amplify'
+import { createTodo } from './graphql/mutations';
+import { listTodos } from './graphql/queries';
+import { Authenticator} from 'aws-amplify-react'
+import AuthWrapper from './Components/AuthWrapper';
+import awsExports from "./aws-exports";
+import InternalApp from './Components/InternalApp';
+import  "./css/tailwind.css"
 
-function App() {
+Amplify.configure(awsExports);
+
+const MyTheme = {
+  button: {backgroundColor: "green", borderColor: "red"} ,
+  singInButtonIcon: {display: "none"}
+}
+
+
+const App = () => {
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div >
+     <Authenticator hideDefault={true} amplifyConfig={awsExports}>
+      <AuthWrapper/>
+     </Authenticator>
     </div>
-  );
+  )
 }
 
 export default App;
